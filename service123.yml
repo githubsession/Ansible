@@ -2,14 +2,26 @@
 
 - hosts: all
   user: root
+<<<<<<< HEAD
   connection: ssh
   become: yes
+=======
+  become: yes
+  connection: ssh
+>>>>>>> 9729d4c7ee2ded32e2c1c629d57ad4642323d019
   gather_facts: yes
   tasks:
   - name: Install HTTPD package
     yum: name=httpd state=latest
+<<<<<<< HEAD
   - name: Starting HTTPD service
     service: name=httpd state=restarted
   - name: Enabling HTTPD service
     service: name=httpd enabled=yes
   
+=======
+  - name: Starting HTTPD services
+    service: name=httpd state=restarted
+  - name: Enabling HTTPD Services
+    service: name=httpd enabled=yes
+>>>>>>> 9729d4c7ee2ded32e2c1c629d57ad4642323d019

@@ -1,0 +1,18 @@
+<<<<<<< HEAD
+--- #First playbook to install Tree package
+=======
+--- #This is my first playbook - installing tree package
+>>>>>>> 9729d4c7ee2ded32e2c1c629d57ad4642323d019
+
+- hosts: all
+  user: root
+  become: yes
+  connection: ssh
+  gather_facts: yes
+  tasks:
+  - name: Install tree package
+<<<<<<< HEAD
+    yum: name=tree state=installed
+=======
+    yum: name=tree state=present
+>>>>>>> 9729d4c7ee2ded32e2c1c629d57ad4642323d019

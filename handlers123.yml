@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 --- #Handlers
 
 - hosts: all
@@ -21,3 +22,17 @@
     service: name=httpd state=restarted
   - name: RESTARTAPACHE2
     service: name=apache2 state=restarted
+=======
+- hosts: all
+  connection: ssh
+  user: root
+  become: yes
+  gather_facts: yes
+  tasks:
+  - name: Installing HTTPD package
+    yum: name=httpd state=latest
+    notify: RESTARTHTTPD
+  handlers:
+  - name: RESTARTHTTPD
+    service: name=httpd state=restarted
+>>>>>>> 9729d4c7ee2ded32e2c1c629d57ad4642323d019
