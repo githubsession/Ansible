@@ -1,0 +1,669 @@
+login as: root
+root@146.148.100.151's password:
+Last failed login: Sat Jun 17 04:45:09 UTC 2017 from 149.ip-158-69-212.net on ss           h:notty
+There were 31 failed login attempts since the last successful login.
+Last login: Fri Jun  9 04:44:23 2017 from controlserver.c.thinking-leaf-167003.i           nternal
+[root@appserver ~]# mkdir playbooks
+[root@appserver ~]# chmod 755 playbooks
+[root@appserver ~]# cd playbooks/
+[root@appserver playbooks]# ll
+total 56
+-rw-r--r--. 1 root root 246 Jun 22 04:00 cron.yml
+-rw-r--r--. 1 root root 193 Jun 22 04:00 delegateto.yml
+-rw-r--r--. 1 root root 198 Jun 22 04:00 firstplaybook.yml
+-rw-r--r--. 1 root root 607 Jun 22 04:00 handlers.yml
+-rw-r--r--. 1 root root 341 Jun 22 04:00 jinja.yml
+-rw-r--r--. 1 root root 417 Jun 22 04:00 loops.yml
+-rw-r--r--. 1 root root 251 Jun 22 04:00 runonce.yml
+-rw-r--r--. 1 root root 329 Jun 22 04:00 service.yml
+-rw-r--r--. 1 root root  16 Jun 22 04:00 test2.txt
+-rw-r--r--. 1 root root  85 Jun 22 04:00 test.sh
+-rw-r--r--. 1 root root   9 Jun 22 04:00 test.txt
+-rw-r--r--. 1 root root  94 Jun 22 04:00 variables.retry
+-rw-r--r--. 1 root root 841 Jun 22 04:00 variables.yml
+-rw-r--r--. 1 root root 300 Jun 22 04:00 waitfor.yml
+[root@appserver playbooks]# cat /root/.ssh/id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDqJXrFDpOIRuqRvWPlB9X0eKWNSQcvLjk8vmq9q8WNHZ0ukPuExrXgSJkde34ZHAH0xTyln/0prqKfQwRsC+o99dCCW9LXNqAY91ae6o0N6MN1SDpUy7W4b66hf1eYexHR3nRbzwlJw072TPvbWmc0vdoaG3oFU+AIYFF08FADIdNfhlUMzlgu+PjNZDBY5FlvmkVaE6wfBSrycdrlBpqnnkEGq+Oa7BCihxBhegRlL9T1qV3f6wO0CKtdBCSRqdXOBLF7Vks7zhX3ekT2ttjMH/yYIvoXKMLTbx6gao0Ho3ivRJaSK5F+H7hQR/ZlgvkrksQ0bTjbn73GW7grz3d1 root@appserver
+[root@appserver playbooks]# youm install -y git
+-bash: youm: command not found
+[root@appserver playbooks]# yum install -y git
+Resolving Dependencies
+--> Running transaction check
+---> Package git.x86_64 0:1.8.3.1-6.el7_2.1 will be installed
+--> Processing Dependency: perl-Git = 1.8.3.1-6.el7_2.1 for package: git-1.8.3.1-6.el7_2.1.x86_64
+--> Processing Dependency: perl(Error) for package: git-1.8.3.1-6.el7_2.1.x86_64
+--> Processing Dependency: perl(Git) for package: git-1.8.3.1-6.el7_2.1.x86_64
+--> Processing Dependency: perl(Term::ReadKey) for package: git-1.8.3.1-6.el7_2.1.x86_64
+--> Processing Dependency: libgnome-keyring.so.0()(64bit) for package: git-1.8.3.1-6.el7_2.1.x86_64
+--> Running transaction check
+---> Package libgnome-keyring.x86_64 0:3.8.0-3.el7 will be installed
+---> Package perl-Error.noarch 1:0.17020-2.el7 will be installed
+---> Package perl-Git.noarch 0:1.8.3.1-6.el7_2.1 will be installed
+---> Package perl-TermReadKey.x86_64 0:2.30-20.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+===========================================================================================
+ Package             Arch      Version               Repository                       Size
+===========================================================================================
+Installing:
+ git                 x86_64    1.8.3.1-6.el7_2.1     rhui-rhel-7-server-rhui-rpms    4.4 M
+Installing for dependencies:
+ libgnome-keyring    x86_64    3.8.0-3.el7           rhui-rhel-7-server-rhui-rpms    109 k
+ perl-Error          noarch    1:0.17020-2.el7       rhui-rhel-7-server-rhui-rpms     32 k
+ perl-Git            noarch    1.8.3.1-6.el7_2.1     rhui-rhel-7-server-rhui-rpms     53 k
+ perl-TermReadKey    x86_64    2.30-20.el7           rhui-rhel-7-server-rhui-rpms     31 k
+
+Transaction Summary
+===========================================================================================
+Install  1 Package (+4 Dependent packages)
+
+Total download size: 4.6 M
+Installed size: 23 M
+Downloading packages:
+(1/5): libgnome-keyring-3.8.0-3.el7.x86_64.rpm                      | 109 kB  00:00:00
+(2/5): perl-Error-0.17020-2.el7.noarch.rpm                          |  32 kB  00:00:00
+(3/5): perl-Git-1.8.3.1-6.el7_2.1.noarch.rpm                        |  53 kB  00:00:00
+(4/5): git-1.8.3.1-6.el7_2.1.x86_64.rpm                             | 4.4 MB  00:00:00
+(5/5): perl-TermReadKey-2.30-20.el7.x86_64.rpm                      |  31 kB  00:00:00
+-------------------------------------------------------------------------------------------
+Total                                                       11 MB/s | 4.6 MB  00:00:00
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : 1:perl-Error-0.17020-2.el7.noarch                                       1/5
+  Installing : libgnome-keyring-3.8.0-3.el7.x86_64                                     2/5
+  Installing : perl-TermReadKey-2.30-20.el7.x86_64                                     3/5
+  Installing : git-1.8.3.1-6.el7_2.1.x86_64                                            4/5
+  Installing : perl-Git-1.8.3.1-6.el7_2.1.noarch                                       5/5
+  Verifying  : perl-Git-1.8.3.1-6.el7_2.1.noarch                                       1/5
+  Verifying  : perl-TermReadKey-2.30-20.el7.x86_64                                     2/5
+  Verifying  : libgnome-keyring-3.8.0-3.el7.x86_64                                     3/5
+  Verifying  : 1:perl-Error-0.17020-2.el7.noarch                                       4/5
+  Verifying  : git-1.8.3.1-6.el7_2.1.x86_64                                            5/5
+
+Installed:
+  git.x86_64 0:1.8.3.1-6.el7_2.1
+
+Dependency Installed:
+  libgnome-keyring.x86_64 0:3.8.0-3.el7        perl-Error.noarch 1:0.17020-2.el7
+  perl-Git.noarch 0:1.8.3.1-6.el7_2.1          perl-TermReadKey.x86_64 0:2.30-20.el7
+
+Complete!
+[root@appserver playbooks]#
+[root@appserver playbooks]#
+[root@appserver playbooks]# git --version
+git version 1.8.3.1
+[root@appserver playbooks]# git init
+Initialized empty Git repository in /root/playbooks/.git/
+[root@appserver playbooks]# git add *
+[root@appserver playbooks]# git status
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+#   (use "git rm --cached <file>..." to unstage)
+#
+#       new file:   cron.yml
+#       new file:   delegateto.yml
+#       new file:   firstplaybook.yml
+#       new file:   handlers.yml
+#       new file:   jinja.yml
+#       new file:   loops.yml
+#       new file:   runonce.yml
+#       new file:   service.yml
+#       new file:   test.sh
+#       new file:   test.txt
+#       new file:   test2.txt
+#       new file:   variables.retry
+#       new file:   variables.yml
+#       new file:   waitfor.yml
+#
+[root@appserver playbooks]#
+[root@appserver playbooks]# git commit -m "first push"
+[master (root-commit) c87c4d9] first push
+ Committer: root <root@appserver.c.thinking-leaf-167003.internal>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 14 files changed, 166 insertions(+)
+ create mode 100644 cron.yml
+ create mode 100644 delegateto.yml
+ create mode 100644 firstplaybook.yml
+ create mode 100644 handlers.yml
+ create mode 100644 jinja.yml
+ create mode 100644 loops.yml
+ create mode 100644 runonce.yml
+ create mode 100644 service.yml
+ create mode 100644 test.sh
+ create mode 100644 test.txt
+ create mode 100644 test2.txt
+ create mode 100644 variables.retry
+ create mode 100644 variables.yml
+ create mode 100644 waitfor.yml
+[root@appserver playbooks]#
+[root@appserver playbooks]#
+[root@appserver playbooks]# git status
+# On branch master
+nothing to commit, working directory clean
+[root@appserver playbooks]# ll
+total 56
+-rw-r--r--. 1 root root 246 Jun 22 04:00 cron.yml
+-rw-r--r--. 1 root root 193 Jun 22 04:00 delegateto.yml
+-rw-r--r--. 1 root root 198 Jun 22 04:00 firstplaybook.yml
+-rw-r--r--. 1 root root 607 Jun 22 04:00 handlers.yml
+-rw-r--r--. 1 root root 341 Jun 22 04:00 jinja.yml
+-rw-r--r--. 1 root root 417 Jun 22 04:00 loops.yml
+-rw-r--r--. 1 root root 251 Jun 22 04:00 runonce.yml
+-rw-r--r--. 1 root root 329 Jun 22 04:00 service.yml
+-rw-r--r--. 1 root root  16 Jun 22 04:00 test2.txt
+-rw-r--r--. 1 root root  85 Jun 22 04:00 test.sh
+-rw-r--r--. 1 root root   9 Jun 22 04:00 test.txt
+-rw-r--r--. 1 root root  94 Jun 22 04:00 variables.retry
+-rw-r--r--. 1 root root 841 Jun 22 04:00 variables.yml
+-rw-r--r--. 1 root root 300 Jun 22 04:00 waitfor.yml
+[root@appserver playbooks]# git push origin master
+fatal: 'origin' does not appear to be a git repository
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+[root@appserver playbooks]# git fetch origin master
+fatal: 'origin' does not appear to be a git repository
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+[root@appserver playbooks]# ls -lart
+total 68
+dr-xr-x---. 6 root root 4096 Jun 22 04:00 ..
+-rw-r--r--. 1 root root  246 Jun 22 04:00 cron.yml
+-rw-r--r--. 1 root root  193 Jun 22 04:00 delegateto.yml
+-rw-r--r--. 1 root root  198 Jun 22 04:00 firstplaybook.yml
+-rw-r--r--. 1 root root  607 Jun 22 04:00 handlers.yml
+-rw-r--r--. 1 root root  341 Jun 22 04:00 jinja.yml
+-rw-r--r--. 1 root root  417 Jun 22 04:00 loops.yml
+-rw-r--r--. 1 root root  251 Jun 22 04:00 runonce.yml
+-rw-r--r--. 1 root root  329 Jun 22 04:00 service.yml
+-rw-r--r--. 1 root root   16 Jun 22 04:00 test2.txt
+-rw-r--r--. 1 root root   85 Jun 22 04:00 test.sh
+-rw-r--r--. 1 root root    9 Jun 22 04:00 test.txt
+-rw-r--r--. 1 root root   94 Jun 22 04:00 variables.retry
+-rw-r--r--. 1 root root  841 Jun 22 04:00 variables.yml
+-rw-r--r--. 1 root root  300 Jun 22 04:00 waitfor.yml
+drwxr-xr-x. 3 root root 4096 Jun 22 04:07 .
+drwxr-xr-x. 8 root root 4096 Jun 22 04:27 .git
+[root@appserver playbooks]# git status
+# On branch master
+nothing to commit, working directory clean
+[root@appserver playbooks]# git remote add origin git@github.com:githubsession/Ansible.git
+[root@appserver playbooks]# git status
+# On branch master
+nothing to commit, working directory clean
+[root@appserver playbooks]# git push origin master
+The authenticity of host 'github.com (192.30.253.113)' can't be established.
+RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'github.com,192.30.253.113' (RSA) to the list of known hosts.
+To git@github.com:githubsession/Ansible.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'git@github.com:githubsession/Ansible.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first merge the remote changes (e.g.,
+hint: 'git pull') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+[root@appserver playbooks]# git fetch origin master
+Warning: Permanently added the RSA host key for IP address '192.30.253.112' to the list of known hosts.
+warning: no common commits
+remote: Counting objects: 34, done.
+remote: Compressing objects: 100% (26/26), done.
+remote: Total 34 (delta 3), reused 31 (delta 3), pack-reused 0
+Unpacking objects: 100% (34/34), done.
+From github.com:githubsession/Ansible
+ * branch            master     -> FETCH_HEAD
+[root@appserver playbooks]# git pull origin master
+From github.com:githubsession/Ansible
+ * branch            master     -> FETCH_HEAD
+Auto-merging test.sh
+CONFLICT (add/add): Merge conflict in test.sh
+Auto-merging service.yml
+CONFLICT (add/add): Merge conflict in service.yml
+Auto-merging loops.yml
+CONFLICT (add/add): Merge conflict in loops.yml
+Auto-merging handlers.yml
+CONFLICT (add/add): Merge conflict in handlers.yml
+Auto-merging firstplaybook.yml
+CONFLICT (add/add): Merge conflict in firstplaybook.yml
+Auto-merging cron.yml
+CONFLICT (add/add): Merge conflict in cron.yml
+Automatic merge failed; fix conflicts and then commit the result.
+[root@appserver playbooks]# mv test.sh test123.sh
+[root@appserver playbooks]# mv service.yml service123.yml
+[root@appserver playbooks]# mv loops.yml loops123.yml
+[root@appserver playbooks]# mv handlers.yml handlers123.yml
+[root@appserver playbooks]# mv firstplaybook.yml firstplaybook123.yml
+[root@appserver playbooks]# mv handlers.yml handlers123.yml^C
+[root@appserver playbooks]# git status
+# On branch master
+# You have unmerged paths.
+#   (fix conflicts and run "git commit")
+#
+# Changes to be committed:
+#
+#       new file:   README.md
+#       new file:   check_package.yml
+#       new file:   crtdir.yml
+#       new file:   delegate.yml
+#       new file:   hello.txt
+#       new file:   include.yml
+#       new file:   install_package.yml
+#       new file:   jinga.yml
+#       new file:   localaction.yml
+#       new file:   pkgs_elinks.log
+#       new file:   pkgs_httpd.log
+#       new file:   pkgs_telnet.log
+#       new file:   remove_http.yml
+#       new file:   runonce.retry
+#       new file:   runonce_1.yml
+#       new file:   tags.yml
+#       new file:   test12.txt
+#       new file:   wait_for.yml
+#       new file:   when_cond.yml
+#
+# Unmerged paths:
+#   (use "git add <file>..." to mark resolution)
+#
+#       both added:         cron.yml
+#       both added:         firstplaybook.yml
+#       both added:         handlers.yml
+#       both added:         loops.yml
+#       both added:         service.yml
+#       both added:         test.sh
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       firstplaybook123.yml
+#       handlers123.yml
+#       loops123.yml
+#       service123.yml
+#       test123.sh
+[root@appserver playbooks]# mv cron.yml cron123.yml
+[root@appserver playbooks]# git status
+# On branch master
+# You have unmerged paths.
+#   (fix conflicts and run "git commit")
+#
+# Changes to be committed:
+#
+#       new file:   README.md
+#       new file:   check_package.yml
+#       new file:   crtdir.yml
+#       new file:   delegate.yml
+#       new file:   hello.txt
+#       new file:   include.yml
+#       new file:   install_package.yml
+#       new file:   jinga.yml
+#       new file:   localaction.yml
+#       new file:   pkgs_elinks.log
+#       new file:   pkgs_httpd.log
+#       new file:   pkgs_telnet.log
+#       new file:   remove_http.yml
+#       new file:   runonce.retry
+#       new file:   runonce_1.yml
+#       new file:   tags.yml
+#       new file:   test12.txt
+#       new file:   wait_for.yml
+#       new file:   when_cond.yml
+#
+# Unmerged paths:
+#   (use "git add <file>..." to mark resolution)
+#
+#       both added:         cron.yml
+#       both added:         firstplaybook.yml
+#       both added:         handlers.yml
+#       both added:         loops.yml
+#       both added:         service.yml
+#       both added:         test.sh
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       cron123.yml
+#       firstplaybook123.yml
+#       handlers123.yml
+#       loops123.yml
+#       service123.yml
+#       test123.sh
+[root@appserver playbooks]# git add *
+[root@appserver playbooks]# git status
+# On branch master
+# You have unmerged paths.
+#   (fix conflicts and run "git commit")
+#
+# Changes to be committed:
+#
+#       new file:   README.md
+#       new file:   check_package.yml
+#       new file:   cron123.yml
+#       new file:   crtdir.yml
+#       new file:   delegate.yml
+#       new file:   firstplaybook123.yml
+#       new file:   handlers123.yml
+#       new file:   hello.txt
+#       new file:   include.yml
+#       new file:   install_package.yml
+#       new file:   jinga.yml
+#       new file:   localaction.yml
+#       new file:   loops123.yml
+#       new file:   pkgs_elinks.log
+#       new file:   pkgs_httpd.log
+#       new file:   pkgs_telnet.log
+#       new file:   remove_http.yml
+#       new file:   runonce.retry
+#       new file:   runonce_1.yml
+#       new file:   service123.yml
+#       new file:   tags.yml
+#       new file:   test12.txt
+#       new file:   test123.sh
+#       new file:   wait_for.yml
+#       new file:   when_cond.yml
+#
+# Unmerged paths:
+#   (use "git add <file>..." to mark resolution)
+#
+#       both added:         cron.yml
+#       both added:         firstplaybook.yml
+#       both added:         handlers.yml
+#       both added:         loops.yml
+#       both added:         service.yml
+#       both added:         test.sh
+#
+[root@appserver playbooks]# git commit -m "second push"
+U       cron.yml
+U       firstplaybook.yml
+U       handlers.yml
+U       loops.yml
+U       service.yml
+U       test.sh
+error: 'commit' is not possible because you have unmerged files.
+hint: Fix them up in the work tree,
+hint: and then use 'git add/rm <file>' as
+hint: appropriate to mark resolution and make a commit,
+hint: or use 'git commit -a'.
+fatal: Exiting because of an unresolved conflict.
+[root@appserver playbooks]# git rm cron.yml
+cron.yml: needs merge
+rm 'cron.yml'
+[root@appserver playbooks]# git merge origin master
+error: 'merge' is not possible because you have unmerged files.
+hint: Fix them up in the work tree,
+hint: and then use 'git add/rm <file>' as
+hint: appropriate to mark resolution and make a commit,
+hint: or use 'git commit -a'.
+fatal: Exiting because of an unresolved conflict.
+[root@appserver playbooks]# git status
+# On branch master
+# You have unmerged paths.
+#   (fix conflicts and run "git commit")
+#
+# Changes to be committed:
+#
+#       new file:   README.md
+#       new file:   check_package.yml
+#       renamed:    cron.yml -> cron123.yml
+#       new file:   crtdir.yml
+#       new file:   delegate.yml
+#       new file:   firstplaybook123.yml
+#       new file:   handlers123.yml
+#       new file:   hello.txt
+#       new file:   include.yml
+#       new file:   install_package.yml
+#       new file:   jinga.yml
+#       new file:   localaction.yml
+#       new file:   loops123.yml
+#       new file:   pkgs_elinks.log
+#       new file:   pkgs_httpd.log
+#       new file:   pkgs_telnet.log
+#       new file:   remove_http.yml
+#       new file:   runonce.retry
+#       new file:   runonce_1.yml
+#       new file:   service123.yml
+#       new file:   tags.yml
+#       new file:   test12.txt
+#       new file:   test123.sh
+#       new file:   wait_for.yml
+#       new file:   when_cond.yml
+#
+# Unmerged paths:
+#   (use "git add <file>..." to mark resolution)
+#
+#       both added:         firstplaybook.yml
+#       both added:         handlers.yml
+#       both added:         loops.yml
+#       both added:         service.yml
+#       both added:         test.sh
+#
+[root@appserver playbooks]# git rm firstplaybook.yml
+firstplaybook.yml: needs merge
+rm 'firstplaybook.yml'
+[root@appserver playbooks]# ll
+total 132
+-rw-r--r--. 1 root root 363 Jun 22 04:31 check_package.yml
+-rw-r--r--. 1 root root 465 Jun 22 04:31 cron123.yml
+-rw-r--r--. 1 root root 192 Jun 22 04:31 crtdir.yml
+-rw-r--r--. 1 root root 193 Jun 22 04:00 delegateto.yml
+-rw-r--r--. 1 root root 191 Jun 22 04:31 delegate.yml
+-rw-r--r--. 1 root root 428 Jun 22 04:31 firstplaybook123.yml
+-rw-r--r--. 1 root root 932 Jun 22 04:31 handlers123.yml
+-rw-r--r--. 1 root root  29 Jun 22 04:31 hello.txt
+-rw-r--r--. 1 root root 194 Jun 22 04:31 include.yml
+-rw-r--r--. 1 root root 127 Jun 22 04:31 install_package.yml
+-rw-r--r--. 1 root root 370 Jun 22 04:31 jinga.yml
+-rw-r--r--. 1 root root 341 Jun 22 04:00 jinja.yml
+-rw-r--r--. 1 root root 115 Jun 22 04:31 localaction.yml
+-rw-r--r--. 1 root root 822 Jun 22 04:31 loops123.yml
+-rw-r--r--. 1 root root 243 Jun 22 04:31 pkgs_elinks.log
+-rw-r--r--. 1 root root 486 Jun 22 04:31 pkgs_httpd.log
+-rw-r--r--. 1 root root 243 Jun 22 04:31 pkgs_telnet.log
+-rw-r--r--. 1 root root   9 Jun 22 04:31 README.md
+-rw-r--r--. 1 root root 157 Jun 22 04:31 remove_http.yml
+-rw-r--r--. 1 root root 415 Jun 22 04:31 runonce_1.yml
+-rw-r--r--. 1 root root  94 Jun 22 04:31 runonce.retry
+-rw-r--r--. 1 root root 251 Jun 22 04:00 runonce.yml
+-rw-r--r--. 1 root root 645 Jun 22 04:31 service123.yml
+-rw-r--r--. 1 root root 510 Jun 22 04:31 tags.yml
+-rw-r--r--. 1 root root 156 Jun 22 04:31 test123.sh
+-rw-r--r--. 1 root root  12 Jun 22 04:31 test12.txt
+-rw-r--r--. 1 root root  16 Jun 22 04:00 test2.txt
+-rw-r--r--. 1 root root   9 Jun 22 04:00 test.txt
+-rw-r--r--. 1 root root  94 Jun 22 04:00 variables.retry
+-rw-r--r--. 1 root root 841 Jun 22 04:00 variables.yml
+-rw-r--r--. 1 root root 307 Jun 22 04:31 wait_for.yml
+-rw-r--r--. 1 root root 300 Jun 22 04:00 waitfor.yml
+-rw-r--r--. 1 root root 531 Jun 22 04:31 when_cond.yml
+[root@appserver playbooks]# git fetch origin master
+From github.com:githubsession/Ansible
+ * branch            master     -> FETCH_HEAD
+[root@appserver playbooks]# git push origin master
+To git@github.com:githubsession/Ansible.git
+ ! [rejected]        master -> master (non-fast-forward)
+error: failed to push some refs to 'git@github.com:githubsession/Ansible.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Merge the remote changes (e.g. 'git pull')
+hint: before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+[root@appserver playbooks]# git pull origin master
+A       README.md
+A       check_package.yml
+D       cron.yml
+A       cron123.yml
+A       crtdir.yml
+A       delegate.yml
+D       firstplaybook.yml
+A       firstplaybook123.yml
+U       handlers.yml
+A       handlers123.yml
+A       hello.txt
+A       include.yml
+A       install_package.yml
+A       jinga.yml
+A       localaction.yml
+U       loops.yml
+A       loops123.yml
+A       pkgs_elinks.log
+A       pkgs_httpd.log
+A       pkgs_telnet.log
+A       remove_http.yml
+A       runonce.retry
+A       runonce_1.yml
+U       service.yml
+A       service123.yml
+A       tags.yml
+U       test.sh
+A       test12.txt
+A       test123.sh
+A       wait_for.yml
+A       when_cond.yml
+Pull is not possible because you have unmerged files.
+Please, fix them up in the work tree, and then use 'git add/rm <file>'
+as appropriate to mark resolution, or use 'git commit -a'.
+[root@appserver playbooks]# git rm firstplaybook.yml
+fatal: pathspec 'firstplaybook.yml' did not match any files
+[root@appserver playbooks]# git rm cron.yml
+fatal: pathspec 'cron.yml' did not match any files
+[root@appserver playbooks]#
+[root@appserver playbooks]#
+[root@appserver playbooks]# git status
+# On branch master
+# All conflicts fixed but you are still merging.
+#   (use "git commit" to conclude merge)
+#
+# Changes to be committed:
+#
+#       new file:   README.md
+#       new file:   check_package.yml
+#       renamed:    cron.yml -> cron123.yml
+#       new file:   crtdir.yml
+#       new file:   delegate.yml
+#       deleted:    firstplaybook.yml
+#       new file:   firstplaybook123.yml
+#       renamed:    handlers.yml -> handlers123.yml
+#       new file:   hello.txt
+#       new file:   include.yml
+#       new file:   install_package.yml
+#       new file:   jinga.yml
+#       new file:   localaction.yml
+#       renamed:    loops.yml -> loops123.yml
+#       new file:   pkgs_elinks.log
+#       new file:   pkgs_httpd.log
+#       new file:   pkgs_telnet.log
+#       new file:   remove_http.yml
+#       new file:   runonce.retry
+#       new file:   runonce_1.yml
+#       renamed:    service.yml -> service123.yml
+#       new file:   tags.yml
+#       new file:   test12.txt
+#       renamed:    test.sh -> test123.sh
+#       new file:   wait_for.yml
+#       new file:   when_cond.yml
+#
+[root@appserver playbooks]# history
+    1  hostname
+    2  exit
+    3  vim /etc/ssh/sshd_config
+    4  systemctl restart sshd
+    5  ssh-keygen
+    6  ls -lart
+    7  cd .ssh
+    8  ls -lrt
+    9  cat id_rsa.pub
+   10  cd
+   11  useradd dhoni
+   12  passwd dhoni
+   13  su - dhoni
+   14  hostname
+   15  nslookup appserver
+   16  yum install -y bind-utils
+   17  cat
+   18  nslookup appserver
+   19  tree
+   20  cd /
+   21  cd ..
+   22  tree
+   23  systemctl status httpd
+   24  systemctl stop httpd
+   25  systemctl status httpd
+   26  exit
+   27  ls -lrt /root/test1.conf
+   28  cat /root/test1.conf
+   29  exit
+   30  ll
+   31  exit
+   32  ll
+   33  cat root_dir.log
+   34  exit
+   35  systemctl tomact status
+   36  systemctl tomcat status
+   37  systemctl status tomcat
+   38  ps -ef |grep -i tomcat
+   39  exit
+   40  mkdir playbooks
+   41  chmod 755 playbooks
+   42  cd playbooks/
+   43  ll
+   44  cat /root/.ssh/id_rsa.pub
+   45  youm install -y git
+   46  yum install -y git
+   47  git --version
+   48  git init
+   49  git add *
+   50  git status
+   51  git commit -m "first push"
+   52  git status
+   53  ll
+   54  git push origin master
+   55  git fetch origin master
+   56  ls -lart
+   57  git status
+   58  git remote add origin git@github.com:githubsession/Ansible.git
+   59  git status
+   60  git push origin master
+   61  git fetch origin master
+   62  git pull origin master
+   63  mv test.sh test123.sh
+   64  mv service.yml service123.yml
+   65  mv loops.yml loops123.yml
+   66  mv handlers.yml handlers123.yml
+   67  mv firstplaybook.yml firstplaybook123.yml
+   68  git status
+   69  mv cron.yml cron123.yml
+   70  git status
+   71  git add *
+   72  git status
+   73  git commit -m "second push"
+   74  git rm cron.yml
+   75  git merge origin master
+   76  git status
+   77  git rm firstplaybook.yml
+   78  ll
+   79  git fetch origin master
+   80  git push origin master
+   81  git pull origin master
+   82  git rm firstplaybook.yml
+   83  git rm cron.yml
+   84  git status
+   85  history
+[root@appserver playbooks]#
